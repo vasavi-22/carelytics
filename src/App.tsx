@@ -21,6 +21,7 @@ function App() {
         >
           <Route path="/" element={<DashboardPage />} />
           <Route path="/analytics" element={<AnalyticsPage />} />
+          <Route path="/patients" element={<PatientDetailsPage />} />
           <Route path="/patients/:patientId" element={<PatientDetailsPage />} />
         </Route>
         <Route path="*" element={<Navigate to="/" replace />} />

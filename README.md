@@ -5,7 +5,7 @@ This project is a front-end UI demo for a B2B healthcare SaaS platform. It showc
 - React + TypeScript
 - Vite dev/build tooling
 - React Router-based page composition
-- State management via Context API (Auth state)
+- State management via Redux Toolkit (health data) + Context API (auth session)
 - Firebase Authentication (Google Sign-In) for Login + session handling
 - A scalable folder structure designed for micro-frontend-style module separation
 
@@ -20,6 +20,7 @@ This project is a front-end UI demo for a B2B healthcare SaaS platform. It showc
 2. **Authentication (Step 1)**
    - Firebase Authentication configured through Vite env vars
    - Login flow with:
+     - Email/Password form UI (client validation + clear message since this demo uses Google sign-in)
      - Google Sign-In popup
      - Firebase error mapping to user-friendly messages
      - loading/disabled submit state
@@ -27,12 +28,19 @@ This project is a front-end UI demo for a B2B healthcare SaaS platform. It showc
    - Route protection:
      - Dashboard, Analytics, and Patient Details are wrapped in `RequireAuth`
 
+3. **B2B UI modules (dashboard/analytics/patients)**
+   - Dashboard shows real operational KPIs computed from public FHIR demo data
+   - Analytics page includes hospital-style charts (admissions trend, completion rate, age profile)
+   - Patient Details page supports **Grid/List** toggle and renders patient demographics from public FHIR demo data
+
 ## Tech used
 
 - **Frontend**: React, TypeScript, React Router
 - **Build tool**: Vite
 - **Auth**: Firebase Authentication (`firebase/auth`)
-- **State management**: Context API (`AuthProvider`)
+- **State management**:
+  - Redux Toolkit (`src/store`, `src/features/health`)
+  - Context API (`AuthProvider`) for auth session only
 
 ## Folder structure (module-oriented)
 
@@ -54,6 +62,14 @@ Key directories:
   - `AuthContext.tsx` (session + sign-in/out APIs)
   - `RequireAuth.tsx` (route guard)
   - `types.ts` (small auth-related types)
+
+- `src/features/health/`
+  - `patientsSlice.ts` (loads patient list from public FHIR)
+  - `encountersSlice.ts` (loads encounter list from public FHIR)
+
+- `src/services/fhir/`
+  - `search.ts` (HAPI FHIR demo search for Patient/Encounter)
+  - `map.ts` (maps FHIR resources into UI summaries)
 
 - `src/integrations/firebase/`  
   Firebase integration module:

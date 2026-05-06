@@ -1,9 +1,10 @@
 import { NavLink, Outlet } from "react-router-dom";
+import { TopHeader } from "./TopHeader";
 
 const navLinks = [
   { to: "/", label: "Dashboard" },
   { to: "/analytics", label: "Analytics" },
-  { to: "/patients/P-1001", label: "Patient Details" },
+  { to: "/patients", label: "Patient Details" },
 ];
 
 export function AppShell() {
@@ -28,9 +29,12 @@ export function AppShell() {
           </ul>
         </nav>
       </aside>
-      <main className="content-area">
-        <Outlet />
-      </main>
+      <div className="main-column">
+        <TopHeader />
+        <main className="content-area">
+          <Outlet />
+        </main>
+      </div>
     </div>
   );
 }
